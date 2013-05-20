@@ -3,6 +3,7 @@
 #include "remotedevice.h"
 #include "devicedelegate.h"
 #include <QtGui/QtGui>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +17,14 @@ MainWindow::MainWindow(QWidget *parent) :
     broadcastSocket = new QUdpSocket(this);
     broadcastSocket->bind(QHostAddress::Any, RDIALER_SERVICE_PORT);
     connect(broadcastSocket, SIGNAL(readyRead()), SLOT(receiveBroadcast()));
+    commandSocket = new QTcpSocket(this);
+    connect(commandSocket, SIGNAL(error(QAbstractSocket::SocketError)),
+            this, SLOT(socketError(QAbstractSocket::SocketError)));
+    connect(commandSocket, SIGNAL(connected()),
+            this, SLOT(sendRequest()));
+    connect(commandSocket, SIGNAL(readyRead()),
+            this, SLOT(receiveReply()));
+
 }
 
 MainWindow::~MainWindow()
@@ -45,6 +54,46 @@ void MainWindow::receiveBroadcast()
     {
         RemoteDevice * device = new RemoteDevice();
         device->InitFromBroadcast(&request, address, RDIALER_SERVICE_PORT);
-        devices->addDevice(device);
+        devices->addDevice(*device);
     }
 }
+
+void MainWindow::socketError(QAbstractSocket::SocketError)
+{
+    QMessageBox::information(this, tr("Connection error"), commandSocket->errorString());
+    if (commandSocket->state() != QAbstractSocket::UnconnectedState)
+        commandSocket->disconnectFromHost();
+}
+
+void MainWindow::sendRequest()
+{
+    QString request("DialNumber " + ui->edtNumber->text() + "\n");
+    commandSocket->write(request.toUtf8());
+}
+
+void MainWindow::receiveReply()
+{
+    QString reply(commandSocket->readLine());
+    qDebug() << "Got reply: " << reply;
+    if (!reply.startsWith("Accepted", Qt::CaseInsensitive))
+        QMessageBox::information(this, tr("Dialing error"), tr("Device reported") + " " + reply);
+    commandSocket->disconnectFromHost();
+}
+
+void MainWindow::dialNumber()
+{
+    RemoteDevice device = devices->at(ui->lvDevices->currentIndex().row());
+    if (ui->edtNumber->text().length() < 3)
+        return;
+    qDebug() << "Dialing on " << device.mName;
+    commandSocket->connectToHost(device.mHost, device.mPort);
+}
+
+void MainWindow::numberChanged(QString _number)
+{
+    if (_number.length() < 3)
+        ui->btnDial->setEnabled(false);
+    else
+        ui->btnDial->setEnabled(true);
+}
+

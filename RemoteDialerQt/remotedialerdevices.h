@@ -7,12 +7,12 @@
 
 #include "remotedevice.h"
 
-class RemoteDialerDevices : public QList<RemoteDevice *>, QStandardItemModel
+class RemoteDialerDevices : public QList<RemoteDevice>, QStandardItemModel
 {
     //Q_OBJECT
 public:
     //explicit RemoteDialerDevices(RemoteDialerDevices * parent = 0);
-    void addDevice(RemoteDevice * _device);
+    void addDevice(RemoteDevice & _device);
 
     void setParentView(QAbstractItemView * _view);
 

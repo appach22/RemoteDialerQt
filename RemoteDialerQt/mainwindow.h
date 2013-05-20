@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QUdpSocket>
+#include <QTcpSocket>
 
 #include "remotedialerdevices.h"
 
@@ -24,10 +25,16 @@ public:
 private:
     Ui::MainWindow *ui;
     QUdpSocket * broadcastSocket;
+    QTcpSocket * commandSocket;
     RemoteDialerDevices * devices;
 
 private slots:
     void receiveBroadcast();
+    void socketError(QAbstractSocket::SocketError);
+    void sendRequest();
+    void receiveReply();
+    void dialNumber();
+    void numberChanged(QString _number);
 
 public slots:
     void addDigit();

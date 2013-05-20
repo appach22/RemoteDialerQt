@@ -5,7 +5,7 @@
 {
 }*/
 
-void RemoteDialerDevices::addDevice(RemoteDevice * _device)
+void RemoteDialerDevices::addDevice(RemoteDevice & _device)
 {
     // Если список уже содержит это устройство - обновляем его в списке (на случай, если порт или имя поменялись)
     QStandardItem * item = NULL;
@@ -14,13 +14,13 @@ void RemoteDialerDevices::addDevice(RemoteDevice * _device)
     {
         // Удаляем уже существующее устройство
         removeAt(index);
-        item = takeItem(index);
+        item = takeRow(index).at(0);
     }
     // Добавляем новое и сообщаем GUI, что надо обновить список
     append(_device);
     if (!item)
         item = new QStandardItem();
-    item->setText(QString() + "<b>" + _device->mName + "</b><br/>" + _device->mModel);
+    item->setText(QString() + "<b>" + _device.mName + "</b><br/>" + _device.mModel);
     appendRow(item);
     parentView->setModel(this);
 }

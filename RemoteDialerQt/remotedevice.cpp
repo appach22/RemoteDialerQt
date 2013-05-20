@@ -7,6 +7,28 @@ RemoteDevice::RemoteDevice(QObject *parent) :
 {
 }
 
+RemoteDevice::RemoteDevice(const RemoteDevice & other) :
+    QObject(0)
+{
+    mName   = other.mName;
+    mUid    = other.mUid;
+    mModel  = other.mModel;
+    mHost   = other.mHost;
+    mPort   = other.mPort;
+    //mType   = other.mType;
+}
+
+RemoteDevice & RemoteDevice::operator=(const RemoteDevice & other)
+{
+    mName   = other.mName;
+    mUid    = other.mUid;
+    mModel  = other.mModel;
+    mHost   = other.mHost;
+    mPort   = other.mPort;
+    //mType   = other.mType;
+    return *this;
+}
+
 RemoteDevice * RemoteDevice::InitFromBroadcast(QString * infoFromPacket, QHostAddress * deviceIP, int devicePort)
 {
     QStringList infos = infoFromPacket->split("|");
@@ -18,3 +40,13 @@ RemoteDevice * RemoteDevice::InitFromBroadcast(QString * infoFromPacket, QHostAd
     mPort = devicePort;
     return this;
 }
+
+bool RemoteDevice::operator==(const RemoteDevice & other) const
+{
+    if (mUid.compare("") && other.mUid.compare(""))
+        return !mUid.compare(other.mUid, Qt::CaseInsensitive);
+    else
+        return !mName.compare(other.mName, Qt::CaseInsensitive);
+    //return false;
+}
+
