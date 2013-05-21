@@ -4,16 +4,29 @@
 #include "devicedelegate.h"
 #include <QtGui/QtGui>
 #include <QMessageBox>
+#include <QStandardPaths>
+#include <QDir>
+#include <QFile>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     devices = new RemoteDialerDevices();
     devices->setParentView(ui->lvDevices);
+    QFile cacheFile(QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0] + DEVICES_FILE_NAME);
+    if (cacheFile.open(QIODevice::ReadOnly))
+    {
+        QDataStream in(&cacheFile);
+        in >> *devices;
+        devices->validateModel();
+    }
+
     DeviceDelegate* delegate = new DeviceDelegate();
     ui->lvDevices->setItemDelegate(delegate);
+
     broadcastSocket = new QUdpSocket(this);
     broadcastSocket->bind(QHostAddress::Any, RDIALER_SERVICE_PORT);
     connect(broadcastSocket, SIGNAL(readyRead()), SLOT(receiveBroadcast()));
@@ -24,12 +37,20 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(sendRequest()));
     connect(commandSocket, SIGNAL(readyRead()),
             this, SLOT(receiveReply()));
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+
+    QString path(QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0]);
+    QDir().mkpath(path);
+    QFile cacheFile(path + DEVICES_FILE_NAME);
+    if (cacheFile.open(QIODevice::WriteOnly))
+    {
+        QDataStream out(&cacheFile);
+        out << *devices;
+    }
 }
 
 void MainWindow::addDigit()

@@ -8,7 +8,8 @@
 #include "remotedialerdevices.h"
 
 
-#define RDIALER_SERVICE_PORT 52836
+#define RDIALER_SERVICE_PORT    52836
+#define DEVICES_FILE_NAME       "/devices.cache"
 
 namespace Ui {
 class MainWindow;

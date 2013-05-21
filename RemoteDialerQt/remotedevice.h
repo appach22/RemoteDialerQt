@@ -12,7 +12,6 @@ public:
     RemoteDevice(const RemoteDevice & other);
     RemoteDevice & operator=(const RemoteDevice & other);
     bool operator==(const RemoteDevice & other) const;
-
     RemoteDevice * InitFromBroadcast(QString * infoFromPacket, QHostAddress * deviceIP, int devicePort);
 
     QString mName;
@@ -30,5 +29,9 @@ public slots:
 private:
     
 };
+
+QDataStream &operator<<(QDataStream &out, RemoteDevice device);
+QDataStream &operator>>(QDataStream &in, RemoteDevice &device);
+//Q_DECLARE_METATYPE(RemoteDevice*)
 
 #endif // REMOTEDEVICE_H

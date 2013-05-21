@@ -50,3 +50,14 @@ bool RemoteDevice::operator==(const RemoteDevice & other) const
     //return false;
 }
 
+QDataStream & operator<<(QDataStream &out, RemoteDevice device)
+{
+    out << device.mName << device.mUid << device.mModel << device.mHost << device.mPort;
+    return out;
+}
+
+QDataStream & operator>>(QDataStream &in, RemoteDevice &device)
+{
+    in >> device.mName >> device.mUid >> device.mModel >> device.mHost >> device.mPort;
+    return in;
+}

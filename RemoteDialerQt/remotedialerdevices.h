@@ -12,8 +12,8 @@ class RemoteDialerDevices : public QList<RemoteDevice>, QStandardItemModel
     //Q_OBJECT
 public:
     //explicit RemoteDialerDevices(RemoteDialerDevices * parent = 0);
-    void addDevice(RemoteDevice & _device);
-
+    void addDevice(const RemoteDevice & _device);
+    void validateModel();
     void setParentView(QAbstractItemView * _view);
 
 signals:
