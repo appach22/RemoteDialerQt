@@ -24,3 +24,5 @@ HEADERS  += mainwindow.h \
     devicedelegate.h
 
 FORMS    += mainwindow.ui
+
+OTHER_FILES +=

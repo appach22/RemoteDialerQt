@@ -11,7 +11,57 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Remote Dialer</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QListView {
+     show-decoration-selected: 1; /* make the selection span the entire width of the view */
+ }
+
+ QListView::item:alternate {
+     background: #EEEEEE;
+ }
+
+ QListView::item:selected {
+     border: 1px solid #6a6ea9;
+ }
+
+ QListView::item:selected:!active {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #ABAFE5, stop: 1 #8588B2);
+ }
+
+ QListView::item:selected:active {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #6a6ea9, stop: 1 #888dd9);
+ }
+
+ QListView::item:hover {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #FAFBFE, stop: 1 #DCDEF1);
+ }
+
+QPushButton {
+    border: 2px solid #8f8f91;
+    border-radius: 6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #f6f7fa, stop: 1 #dadbde);
+    min-width: 50px;
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #dadbde, stop: 1 #f6f7fa);
+}
+
+QPushButton:flat {
+    border: none; /* no border for a flat push button */
+}
+
+QPushButton:default {
+    border-color: navy; /* make the default button prominent */
+}
+</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -19,7 +69,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>259</width>
+      <width>261</width>
       <height>423</height>
      </rect>
     </property>
@@ -75,6 +125,35 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QListView {
+     show-decoration-selected: 1; /* make the selection span the entire width of the view */
+ }
+
+ QListView::item:alternate {
+     background: #EEEEEE;
+ }
+
+ QListView::item:selected {
+     border: 1px solid #6a6ea9;
+ }
+
+ QListView::item:selected:!active {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #ABAFE5, stop: 1 #8588B2);
+ }
+
+ QListView::item:selected:active {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #6a6ea9, stop: 1 #888dd9);
+ }
+
+ QListView::item:hover {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #FAFBFE, stop: 1 #DCDEF1);
+ }
+</string>
        </property>
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
@@ -248,6 +327,22 @@
       <widget class="QPushButton" name="btnDial">
        <property name="text">
         <string>Набрать</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblStatus">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255)</string>
+       </property>
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </item>

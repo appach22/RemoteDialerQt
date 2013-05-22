@@ -14,6 +14,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    isDialing = false;
+
+//    QFile style("style.qss");
+//    style.open(QFile::ReadOnly);
+//    QString styleSheet = QLatin1String(style.readAll());
+//    qApp->setStyleSheet(styleSheet);
+
     devices = new RemoteDialerDevices();
     devices->setParentView(ui->lvDevices);
     QFile cacheFile(QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0] + DEVICES_FILE_NAME);
@@ -26,6 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     DeviceDelegate* delegate = new DeviceDelegate();
     ui->lvDevices->setItemDelegate(delegate);
+
+    connect(ui->lvDevices->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex &, const QModelIndex &)), SLOT(selectionChanged()));
 
     broadcastSocket = new QUdpSocket(this);
     broadcastSocket->bind(QHostAddress::Any, RDIALER_SERVICE_PORT);
@@ -59,6 +68,7 @@ void MainWindow::addDigit()
     if (digit == "10") digit = "*";
     else if (digit == "11") digit = "#";
     ui->edtNumber->setText(ui->edtNumber->text() + digit);
+    ui->lblStatus->setText("");
 }
 
 void MainWindow::receiveBroadcast()
@@ -84,6 +94,8 @@ void MainWindow::socketError(QAbstractSocket::SocketError)
     QMessageBox::information(this, tr("Connection error"), commandSocket->errorString());
     if (commandSocket->state() != QAbstractSocket::UnconnectedState)
         commandSocket->disconnectFromHost();
+    isDialing = false;
+    ui->btnDial->setEnabled(true);
 }
 
 void MainWindow::sendRequest()
@@ -97,16 +109,46 @@ void MainWindow::receiveReply()
     QString reply(commandSocket->readLine());
     qDebug() << "Got reply: " << reply;
     if (!reply.startsWith("Accepted", Qt::CaseInsensitive))
-        QMessageBox::information(this, tr("Dialing error"), tr("Device reported") + " " + reply);
+    {
+        ui->lblStatus->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 63, 63)");
+        ui->lblStatus->setText(tr("Dialing error:") + reply);
+    }
+    else
+    {
+        ui->lblStatus->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(63, 255, 63)");
+        ui->lblStatus->setText(tr("Number dialed successfully."));
+    }
     commandSocket->disconnectFromHost();
+    isDialing = false;
+    ui->btnDial->setEnabled(true);
 }
 
 void MainWindow::dialNumber()
 {
-    RemoteDevice device = devices->at(ui->lvDevices->currentIndex().row());
-    if (ui->edtNumber->text().length() < 3)
+    if (isDialing)
         return;
+
+    if (ui->edtNumber->text().length() < 3)
+    {
+        ui->lblStatus->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 63, 63)");
+        ui->lblStatus->setText(tr("Number is too short"));
+        return;
+    }
+
+    if (ui->lvDevices->currentIndex().row() == -1)
+    {
+        ui->lblStatus->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 63, 63)");
+        ui->lblStatus->setText(tr("Device not selected"));
+        return;
+    }
+
+    RemoteDevice device = devices->at(ui->lvDevices->currentIndex().row());
     qDebug() << "Dialing on " << device.mName;
+    ui->btnDial->setEnabled(false);
+    isDialing = true;
+    ui->lblStatus->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(63, 255, 63)");
+    ui->lblStatus->setText(tr("Dialing number..."));
+    QTimer::singleShot(7000, this, SLOT(connectionTimeout()));
     commandSocket->connectToHost(device.mHost, device.mPort);
 }
 
@@ -116,5 +158,21 @@ void MainWindow::numberChanged(QString _number)
         ui->btnDial->setEnabled(false);
     else
         ui->btnDial->setEnabled(true);
+    if (!isDialing)
+        ui->lblStatus->setText("");
 }
 
+void MainWindow::connectionTimeout()
+{
+    commandSocket->abort();
+    ui->lblStatus->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 63, 63)");
+    ui->lblStatus->setText(tr("Dialing error!"));
+    isDialing = false;
+    ui->btnDial->setEnabled(true);
+}
+
+void MainWindow::selectionChanged()
+{
+    if (!isDialing)
+        ui->lblStatus->setText("");
+}

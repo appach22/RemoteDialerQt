@@ -28,6 +28,7 @@ private:
     QUdpSocket * broadcastSocket;
     QTcpSocket * commandSocket;
     RemoteDialerDevices * devices;
+    bool isDialing;
 
 private slots:
     void receiveBroadcast();
@@ -36,6 +37,8 @@ private slots:
     void receiveReply();
     void dialNumber();
     void numberChanged(QString _number);
+    void connectionTimeout();
+    void selectionChanged();
 
 public slots:
     void addDigit();

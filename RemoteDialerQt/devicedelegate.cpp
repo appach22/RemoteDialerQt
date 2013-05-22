@@ -16,6 +16,7 @@ void DeviceDelegate::paint(QPainter* painter, const QStyleOptionViewItem & optio
     painter->save();
 
     QTextDocument doc;
+    doc.setDefaultStyleSheet("color: rgb(255, 63, 63)");
     doc.setHtml(options.text);
 
     options.text = "";
