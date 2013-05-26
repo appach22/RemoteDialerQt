@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QUdpSocket>
 #include <QTcpSocket>
+#include <QTimer>
 
 #include "remotedialerdevices.h"
 
@@ -27,8 +28,14 @@ private:
     Ui::MainWindow *ui;
     QUdpSocket * broadcastSocket;
     QTcpSocket * commandSocket;
+    QTcpSocket * checkSocket;
     RemoteDialerDevices * devices;
     bool isDialing;
+    int currentCheckIndex;
+    QList<QHostAddress> broadcastAddresses;
+    QTimer checkTimer;
+
+    void checkNextDeviceAvailability();
 
 private slots:
     void receiveBroadcast();
@@ -39,6 +46,7 @@ private slots:
     void numberChanged(QString _number);
     void connectionTimeout();
     void selectionChanged();
+    void searchForDevices();
 
 public slots:
     void addDigit();

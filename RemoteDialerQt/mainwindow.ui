@@ -64,13 +64,19 @@ QPushButton:default {
 </string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
       <width>261</width>
-      <height>423</height>
+      <height>437</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -159,6 +165,36 @@ QPushButton:default {
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
       </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="lblSearch">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnSearch">
+         <property name="text">
+          <string>Search</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -360,8 +396,8 @@ QPushButton:default {
    <slot>addDigit()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>52</x>
-     <y>295</y>
+     <x>63</x>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>64</x>
@@ -376,8 +412,8 @@ QPushButton:default {
    <slot>addDigit()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>166</x>
-     <y>295</y>
+     <x>167</x>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>83</x>
@@ -392,8 +428,8 @@ QPushButton:default {
    <slot>addDigit()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>247</x>
-     <y>295</y>
+     <x>249</x>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>112</x>
@@ -593,10 +629,27 @@ QPushButton:default {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnSearch</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>searchForDevices()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>280</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addDigit()</slot>
   <slot>dialNumber()</slot>
   <slot>numberChanged(QString)</slot>
+  <slot>searchForDevices()</slot>
  </slots>
 </ui>
