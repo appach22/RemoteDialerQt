@@ -7,6 +7,12 @@ RemoteDevice::RemoteDevice(QObject *parent) :
 {
 }
 
+RemoteDevice::RemoteDevice(const QString & uid) :
+    QObject(0)
+{
+    mUid    = uid;
+}
+
 RemoteDevice::RemoteDevice(const RemoteDevice & other) :
     QObject(0)
 {

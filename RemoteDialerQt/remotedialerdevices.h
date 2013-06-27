@@ -15,6 +15,7 @@ public:
     void addDevice(const RemoteDevice & _device);
     void validateModel();
     void setParentView(QAbstractItemView * _view);
+    void selectDevice(int _index);
 
 signals:
     

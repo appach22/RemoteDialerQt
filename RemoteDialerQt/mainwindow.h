@@ -9,8 +9,9 @@
 #include "remotedialerdevices.h"
 
 
-#define RDIALER_SERVICE_PORT    52836
-#define DEVICES_FILE_NAME       "/devices.cache"
+#define RDIALER_SERVICE_PORT        52836
+#define DEVICES_FILE_NAME           "/devices.cache"
+#define DEFAULT_DEVICE_FILE_NAME    "/default-device.cache"
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +33,7 @@ private:
     RemoteDialerDevices * devices;
     bool isDialing;
     int currentCheckIndex;
+    int currentSelectedIndex;
     QList<QHostAddress> broadcastAddresses;
     QTimer dialTimer;
     QTimer checkTimer;
@@ -49,7 +51,7 @@ private slots:
     void dialNumber();
     void numberChanged(QString _number);
     void connectionTimeout();
-    void selectionChanged();
+    void selectionChanged(const QModelIndex & current, const QModelIndex & previous);
     void searchForDevices();
 
 public slots:

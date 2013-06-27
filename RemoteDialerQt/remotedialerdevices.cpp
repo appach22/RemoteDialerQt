@@ -18,11 +18,13 @@ void RemoteDialerDevices::addDevice(const RemoteDevice & _device)
             item = takeRow(index).at(0);
     }
     // Добавляем новое и сообщаем GUI, что надо обновить список
-    append(_device);
+    //append(_device);
+    insert(index, _device);
     if (!item)
         item = new QStandardItem();
     item->setText(QString() + "<b>" + _device.mName + "</b><br/>" + _device.mModel);
-    appendRow(item);
+    //appendRow(item);
+    insertRow(index, item);
     parentView->setModel(this);
 }
 
@@ -41,4 +43,11 @@ void RemoteDialerDevices::validateModel()
 void RemoteDialerDevices::setParentView(QAbstractItemView * _view)
 {
     parentView = _view;
+}
+
+void RemoteDialerDevices::selectDevice(int _deviceIndex)
+{
+    qDebug() << "selecting device" << _deviceIndex;
+    QModelIndex idx = index(_deviceIndex, 0);
+    parentView->setCurrentIndex(idx);
 }

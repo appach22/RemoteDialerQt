@@ -22,8 +22,10 @@ MainWindow::MainWindow(QWidget *parent) :
 //    QString styleSheet = QLatin1String(style.readAll());
 //    qApp->setStyleSheet(styleSheet);
 
+    // Создаем пустой список устройств
     devices = new RemoteDialerDevices();
     devices->setParentView(ui->lvDevices);
+    // Восстанавливаем сохраненные устройства
     QFile cacheFile(QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0] + DEVICES_FILE_NAME);
     if (cacheFile.open(QIODevice::ReadOnly))
     {
@@ -31,11 +33,23 @@ MainWindow::MainWindow(QWidget *parent) :
         in >> *devices;
         devices->validateModel();
     }
-
     DeviceDelegate* delegate = new DeviceDelegate();
     ui->lvDevices->setItemDelegate(delegate);
 
-    connect(ui->lvDevices->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex &, const QModelIndex &)), SLOT(selectionChanged()));
+    // Восстанавливаем выделение
+    currentSelectedIndex = -1;
+    QFile defFile(QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0] + DEFAULT_DEVICE_FILE_NAME);
+    if (defFile.open(QIODevice::ReadOnly))
+    {
+        QDataStream in(&defFile);
+        QString savedUid;
+        in >> savedUid;
+        RemoteDevice savedSelection(savedUid);
+        currentSelectedIndex = devices->indexOf(savedSelection);
+        devices->selectDevice(currentSelectedIndex);
+    }
+
+    connect(ui->lvDevices->selectionModel(), SIGNAL(currentRowChanged(const QModelIndex &, const QModelIndex &)), SLOT(selectionChanged(const QModelIndex &, const QModelIndex &)));
 
     broadcastSocket = new QUdpSocket(this);
     broadcastSocket->bind(QHostAddress::Any, RDIALER_SERVICE_PORT);
@@ -76,6 +90,12 @@ MainWindow::~MainWindow()
         QDataStream out(&cacheFile);
         out << *devices;
     }
+    QFile defFile(path + DEFAULT_DEVICE_FILE_NAME);
+    if (defFile.open(QIODevice::WriteOnly))
+    {
+        QDataStream out(&defFile);
+        out << devices->at(currentSelectedIndex).mUid;
+    }
 }
 
 void MainWindow::addDigit()
@@ -101,7 +121,9 @@ void MainWindow::receiveBroadcast()
     {
         RemoteDevice * device = new RemoteDevice();
         device->InitFromBroadcast(&request, address, RDIALER_SERVICE_PORT);
+        int currentSelectedIndexBackup = currentSelectedIndex;
         devices->addDevice(*device);
+        devices->selectDevice(currentSelectedIndex = currentSelectedIndexBackup);
     }
 }
 
@@ -229,10 +251,12 @@ void MainWindow::connectionTimeout()
     }
 }
 
-void MainWindow::selectionChanged()
+void MainWindow::selectionChanged(const QModelIndex & current, const QModelIndex & previous)
 {
     if (!isDialing)
         ui->lblStatus->clear();
+    currentSelectedIndex = current.row();
+    qDebug() << "selected row" << currentSelectedIndex;
 }
 
 void MainWindow::searchForDevices()

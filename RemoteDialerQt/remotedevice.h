@@ -9,6 +9,7 @@ class RemoteDevice : public QObject
     Q_OBJECT
 public:
     explicit RemoteDevice(QObject *parent = 0);
+    RemoteDevice(const QString & uid);
     RemoteDevice(const RemoteDevice & other);
     RemoteDevice & operator=(const RemoteDevice & other);
     bool operator==(const RemoteDevice & other) const;
