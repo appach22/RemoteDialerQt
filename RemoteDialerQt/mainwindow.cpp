@@ -266,3 +266,33 @@ void MainWindow::checkNextDeviceAvailability()
 
 }
 
+
+bool MainWindow::eventFilter(QObject* obj, QEvent* event)
+{
+    if (event->type() == QEvent::FileOpen)
+    {
+        QFileOpenEvent* fileEvent = static_cast<QFileOpenEvent*>(event);
+        if (!fileEvent->url().isEmpty())
+        {
+            QString lastUrl = fileEvent->url().toString();
+            QString number = fileEvent->url().path().split(":").at(1);
+            emit gotNumber(number);
+            //qDebug() << lastUrl;
+            //qDebug() << fileEvent->url().host() << fileEvent->url().port() << fileEvent->url().path() << fileEvent->url().query() << fileEvent->url().scheme();
+            //QMessageBox::information(this, QString("URL opened"), lastUrl);
+            //emit urlOpened(m_lastUrl);
+        }
+        else if (!fileEvent->file().isEmpty())
+        {
+            QMessageBox::information(this, QString("File opened"), fileEvent->file());
+//            emit fileOpened(fileEvent->file());
+        }
+
+        return false;
+    }
+    else
+    {
+        // standard event processing
+        return QObject::eventFilter(obj, event);
+    }
+}

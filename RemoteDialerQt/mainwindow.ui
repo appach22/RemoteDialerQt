@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>259</width>
-    <height>423</height>
+    <width>301</width>
+    <height>491</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -75,11 +75,14 @@ QPushButton:default {
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>261</width>
-      <height>437</height>
+      <width>301</width>
+      <height>491</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>-1</number>
+     </property>
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
@@ -197,62 +200,19 @@ QPushButton:default {
       </layout>
      </item>
      <item>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetDefaultConstraint</enum>
+      <layout class="QGridLayout" name="gridLayout">
+       <property name="leftMargin">
+        <number>0</number>
        </property>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="btn_10">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>*</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="btn_1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>1</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="btn_4">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>4</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="btn_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>2</string>
-         </property>
-        </widget>
-       </item>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="spacing">
+        <number>15</number>
+       </property>
        <item row="2" column="0">
         <widget class="QPushButton" name="btn_7">
          <property name="sizePolicy">
@@ -260,6 +220,18 @@ QPushButton:default {
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>54</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
          </property>
          <property name="text">
           <string>7</string>
@@ -274,21 +246,14 @@ QPushButton:default {
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="text">
           <string>8</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QPushButton" name="btn_0">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>0</string>
          </property>
         </widget>
        </item>
@@ -300,21 +265,89 @@ QPushButton:default {
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="text">
           <string>5</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="btn_3">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="btn_1">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>1</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>54</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>11</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="btn_4">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>54</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="text">
-          <string>3</string>
+          <string>4</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="btn_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>1</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>54</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>2</string>
          </property>
         </widget>
        </item>
@@ -326,21 +359,33 @@ QPushButton:default {
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="text">
           <string>6</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="btn_9">
+       <item row="0" column="2">
+        <widget class="QPushButton" name="btn_3">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
+           <horstretch>1</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="text">
-          <string>9</string>
+          <string>3</string>
          </property>
         </widget>
        </item>
@@ -352,8 +397,77 @@ QPushButton:default {
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="text">
           <string>#</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="btn_9">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>9</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="btn_0">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="btn_10">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>54</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>*</string>
          </property>
         </widget>
        </item>
@@ -390,198 +504,6 @@ QPushButton:default {
  <resources/>
  <connections>
   <connection>
-   <sender>btn_1</sender>
-   <signal>pressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>63</x>
-     <y>314</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>64</x>
-     <y>422</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_2</sender>
-   <signal>pressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>167</x>
-     <y>314</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>83</x>
-     <y>422</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_3</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>249</x>
-     <y>314</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>112</x>
-     <y>422</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_4</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>64</x>
-     <y>324</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>166</x>
-     <y>417</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_5</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>166</x>
-     <y>324</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>258</x>
-     <y>422</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_6</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>247</x>
-     <y>324</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>258</x>
-     <y>373</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_7</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>51</x>
-     <y>353</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>19</x>
-     <y>420</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_8</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>166</x>
-     <y>353</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>10</x>
-     <y>422</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_9</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>247</x>
-     <y>353</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>159</x>
-     <y>422</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_10</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>32</x>
-     <y>382</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>231</x>
-     <y>422</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_0</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>166</x>
-     <y>382</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>258</x>
-     <y>422</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_11</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>addDigit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>247</x>
-     <y>382</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>258</x>
-     <y>397</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>lvDevices</sender>
    <signal>doubleClicked(QModelIndex)</signal>
    <receiver>MainWindow</receiver>
@@ -604,8 +526,8 @@ QPushButton:default {
    <slot>dialNumber()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
-     <y>401</y>
+     <x>226</x>
+     <y>458</y>
     </hint>
     <hint type="destinationlabel">
      <x>221</x>
@@ -636,8 +558,8 @@ QPushButton:default {
    <slot>searchForDevices()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>280</y>
+     <x>290</x>
+     <y>318</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -645,8 +567,41 @@ QPushButton:default {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>MainWindow</sender>
+   <signal>gotNumber(QString)</signal>
+   <receiver>edtNumber</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>34</x>
+     <y>7</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>74</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>MainWindow</sender>
+   <signal>gotNumber(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>numberChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>36</x>
+     <y>318</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>69</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
+  <signal>gotNumber(QString)</signal>
   <slot>addDigit()</slot>
   <slot>dialNumber()</slot>
   <slot>numberChanged(QString)</slot>

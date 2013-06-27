@@ -37,6 +37,9 @@ private:
 
     void checkNextDeviceAvailability();
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *ev);
+
 private slots:
     void receiveBroadcast();
     void socketError(QAbstractSocket::SocketError);
@@ -50,6 +53,9 @@ private slots:
 
 public slots:
     void addDigit();
+
+signals:
+    void gotNumber(QString number);
 
 };
 

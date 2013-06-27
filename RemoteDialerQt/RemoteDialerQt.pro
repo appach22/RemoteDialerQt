@@ -27,7 +27,9 @@ FORMS    += mainwindow.ui
 
 OTHER_FILES +=
 
-CONFIG += static
+QMAKE_INFO_PLIST = Info.plist
+
+#CONFIG += static
 
 #LIBS += -L"C:/Qt/Qt5.0.1/5.0.1/mingw47_32/lib" -l"Qt5Network" -l"Qt5Widgets"
 #-l"Qt5Core.a" -l"Qt5Gui.a"
