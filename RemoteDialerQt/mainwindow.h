@@ -27,12 +27,13 @@ public:
 private:
     Ui::MainWindow *ui;
     QUdpSocket * broadcastSocket;
-    QTcpSocket * commandSocket;
+    QTcpSocket * dialSocket;
     QTcpSocket * checkSocket;
     RemoteDialerDevices * devices;
     bool isDialing;
     int currentCheckIndex;
     QList<QHostAddress> broadcastAddresses;
+    QTimer dialTimer;
     QTimer checkTimer;
 
     void checkNextDeviceAvailability();

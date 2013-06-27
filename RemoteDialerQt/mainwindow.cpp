@@ -40,15 +40,17 @@ MainWindow::MainWindow(QWidget *parent) :
     broadcastSocket = new QUdpSocket(this);
     broadcastSocket->bind(QHostAddress::Any, RDIALER_SERVICE_PORT);
     connect(broadcastSocket, SIGNAL(readyRead()), SLOT(receiveBroadcast()));
-    commandSocket = new QTcpSocket(this);
-    connect(commandSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
-    connect(commandSocket, SIGNAL(connected()), this, SLOT(sendRequest()));
-    connect(commandSocket, SIGNAL(readyRead()), this, SLOT(receiveReply()));
+    dialSocket = new QTcpSocket(this);
+    connect(dialSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
+    connect(dialSocket, SIGNAL(connected()), this, SLOT(sendRequest()));
+    connect(dialSocket, SIGNAL(readyRead()), this, SLOT(receiveReply()));
     checkSocket = new QTcpSocket(this);
     connect(checkSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
     connect(checkSocket, SIGNAL(connected()), this, SLOT(sendRequest()));
     connect(checkSocket, SIGNAL(readyRead()), this, SLOT(receiveReply()));
 
+    dialTimer.setSingleShot(true);
+    connect(&dialTimer, SIGNAL(timeout()), this, SLOT(connectionTimeout()));
     checkTimer.setSingleShot(true);
     connect(&checkTimer, SIGNAL(timeout()), this, SLOT(connectionTimeout()));
 
@@ -105,11 +107,12 @@ void MainWindow::receiveBroadcast()
 
 void MainWindow::socketError(QAbstractSocket::SocketError)
 {
-    if (sender() == commandSocket)
+    if (sender() == dialSocket)
     {
-        QMessageBox::information(this, tr("Connection error"), commandSocket->errorString());
-        if (commandSocket->state() != QAbstractSocket::UnconnectedState)
-            commandSocket->disconnectFromHost();
+        dialTimer.stop();
+        QMessageBox::information(this, tr("Connection error"), dialSocket->errorString());
+        if (dialSocket->state() != QAbstractSocket::UnconnectedState)
+            dialSocket->disconnectFromHost();
         isDialing = false;
         ui->btnDial->setEnabled(true);
     }
@@ -122,10 +125,10 @@ void MainWindow::socketError(QAbstractSocket::SocketError)
 
 void MainWindow::sendRequest()
 {
-    if (sender() == commandSocket)
+    if (sender() == dialSocket)
     {
         QString request("DialNumber " + ui->edtNumber->text() + "\n");
-        commandSocket->write(request.toUtf8());
+        dialSocket->write(request.toUtf8());
     }
     else if (sender() == checkSocket)
     {
@@ -137,9 +140,10 @@ void MainWindow::sendRequest()
 
 void MainWindow::receiveReply()
 {
-    if (sender() == commandSocket)
+    if (sender() == dialSocket)
     {
-        QString reply(commandSocket->readLine());
+        dialTimer.stop();
+        QString reply(dialSocket->readLine());
         qDebug() << "Got reply: " << reply;
         if (!reply.startsWith("Accepted", Qt::CaseInsensitive))
         {
@@ -151,7 +155,7 @@ void MainWindow::receiveReply()
             ui->lblStatus->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(63, 255, 63)");
             ui->lblStatus->setText(tr("Number dialed successfully."));
         }
-        commandSocket->disconnectFromHost();
+        dialSocket->disconnectFromHost();
         isDialing = false;
         ui->btnDial->setEnabled(true);
     }
@@ -193,8 +197,8 @@ void MainWindow::dialNumber()
     isDialing = true;
     ui->lblStatus->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(63, 255, 63)");
     ui->lblStatus->setText(tr("Dialing number..."));
-    QTimer::singleShot(7000, this, SLOT(connectionTimeout()));
-    commandSocket->connectToHost(device.mHost, device.mPort);
+    dialTimer.start(7000);
+    dialSocket->connectToHost(device.mHost, device.mPort);
 }
 
 void MainWindow::numberChanged(QString _number)
@@ -217,7 +221,7 @@ void MainWindow::connectionTimeout()
     }
     else
     {
-        commandSocket->abort();
+        dialSocket->abort();
         ui->lblStatus->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 63, 63)");
         ui->lblStatus->setText(tr("Dialing error!"));
         isDialing = false;
