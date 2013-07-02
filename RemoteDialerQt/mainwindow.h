@@ -40,8 +40,10 @@ private:
 
     void checkNextDeviceAvailability();
 
+#ifdef Q_OS_MAC
 protected:
     bool eventFilter(QObject *obj, QEvent *ev);
+#endif
 
 private slots:
     void receiveBroadcast();

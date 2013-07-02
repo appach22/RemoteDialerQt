@@ -63,6 +63,19 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(checkSocket, SIGNAL(connected()), this, SLOT(sendRequest()));
     connect(checkSocket, SIGNAL(readyRead()), this, SLOT(receiveReply()));
 
+#ifdef Q_OS_WIN
+    QStringList args = QCoreApplication::arguments();
+    if (args.size() >=2)
+        ui->edtNumber->setText(args.at(1).split(":").last());
+    QSettings registry("HKEY_CLASSES_ROOT\\rdialer", QSettings::NativeFormat);
+    registry.setValue("Default", "URL:Remote Dialer Protocol");
+    registry.setValue("URL Protocol", "");
+    QString binary = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
+    registry.setValue("DefaultIcon/Default", QString("\"") + binary + QString("\",0"));
+    registry.setValue("shell/open/command/Default", QString("\"") + binary + QString("\" \"%1\""));
+    registry.sync();
+#endif
+
     dialTimer.setSingleShot(true);
     connect(&dialTimer, SIGNAL(timeout()), this, SLOT(connectionTimeout()));
     checkTimer.setSingleShot(true);
@@ -90,6 +103,9 @@ MainWindow::~MainWindow()
         QDataStream out(&cacheFile);
         out << *devices;
     }
+    if (currentSelectedIndex < 0 || devices->size() == 0)
+        return;
+
     QFile defFile(path + DEFAULT_DEVICE_FILE_NAME);
     if (defFile.open(QIODevice::WriteOnly))
     {
@@ -294,6 +310,7 @@ void MainWindow::checkNextDeviceAvailability()
 
 }
 
+#ifdef Q_OS_MAC
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 {
@@ -324,3 +341,4 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
         return QObject::eventFilter(obj, event);
     }
 }
+ #endif
